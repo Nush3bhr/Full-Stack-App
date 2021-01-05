@@ -6,10 +6,29 @@ import "./Posts.css";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Button from "@material-ui/core/Button";
+import { TextField } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
     backgroundColor: "aqua",
+  },
+  root: {
+    minWidth: 275,
+    marginBottom: "20px",
+  },
+  bullet: {
+    display: "inline-block",
+    margin: "0 2px",
+    transform: "scale(0.8)",
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
   },
 }));
 const Posts = () => {
@@ -51,6 +70,9 @@ const Posts = () => {
         );
         alert(post + " is posted successfully to   " + toName);
         fetchData();
+        setName("");
+        setPost("");
+        setToName("");
 
         console.log("post: ", postedData);
       } else {
@@ -87,57 +109,61 @@ const Posts = () => {
         </Toolbar>
       </AppBar>
       <div classes="secondDiv">
-        <form onSubmit={handleSubmit}>
+        <form style={{ margin: "20px" }} onSubmit={handleSubmit}>
           <Typography className={classes.typo}> Type Something:</Typography>
-          <center>
-            {" "}
-            <input
-              name="name"
-              value={name}
-              placeholder="Full Name "
-              onChange={handleChange}
-              type="text"
-            />
-            <br />
-            <input
-              name="post"
-              value={post}
-              placeholder="Write here.. "
-              onChange={handleChange}
-              type="text"
-            />
-          </center>
+          <TextField
+            name="name"
+            label="Name"
+            value={name}
+            onChange={handleChange}
+          />
           <br />
-          <center>
-            <input
-              name="toName"
-              value={toName}
-              placeholder="Send to "
-              onChange={handleChange}
-              type="text"
-            />
-          </center>
-          <center>
-            {" "}
-            <input value="Post" type="submit" />
-          </center>
+          <TextField
+            name="toName"
+            value={toName}
+            label="To Whom"
+            onChange={handleChange}
+          />
+          <br />
+          <TextField
+            name="post"
+            label="Quotes"
+            value={post}
+            onChange={handleChange}
+          />
+
+          <Button
+            style={{ marginLeft: "50px" }}
+            variant="contained"
+            color="primary"
+            type="submit"
+          >
+            Post
+          </Button>
         </form>
 
-        <center>
-          <div>
-            {values &&
-              values.map((myData, index) => (
-                <div key={index}>
-                  <h3>{myData.name}</h3>
-                  <p>{myData.post}</p>
-                  <h6>{myData.receiver}</h6>
-                  <p>
-                    {myData.name} post to {myData.receiver}
-                  </p>
-                </div>
-              ))}
-          </div>
-        </center>
+        <div>
+          {values &&
+            values.map((myData, index) => (
+              <Card key={index} className={classes.root}>
+                <CardContent>
+                  <Typography
+                    className={classes.title}
+                    color="textSecondary"
+                    gutterBottom
+                  >
+                    {index +
+                      1 +
+                      ". " +
+                      myData.name +
+                      " posted to " +
+                      myData.receiver}
+                  </Typography>
+                  {myData.post}
+                </CardContent>
+              </Card>
+            ))}
+        </div>
       </div>
     </div>
   );
