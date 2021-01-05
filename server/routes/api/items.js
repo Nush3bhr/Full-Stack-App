@@ -13,6 +13,7 @@ router.post("/", (req, res) => {
   const newItem = new Item({
     name: req.body.name,
     post: req.body.post,
+    receiver: req.body.receiver,
   });
 
   newItem.save().then((item) => res.json(item));
