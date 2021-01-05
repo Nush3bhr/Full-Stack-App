@@ -7,6 +7,10 @@ const ItemSchema = new Schema({
     type: String,
     trim: true,
   },
+  post: {
+    type: String,
+    trim: true,
+  },
   date: {
     type: Date,
     default: Date.now,

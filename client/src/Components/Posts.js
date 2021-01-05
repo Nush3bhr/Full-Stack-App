@@ -1,23 +1,29 @@
 import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
-
+import "./Posts.css";
 const Posts = () => {
-  const [posts, setPosts] = useState("");
-  const [values, setValues] = useState("");
+  const [post, setPost] = useState("");
+  const [values, setValues] = useState([]);
+  const [name, setName] = useState("");
 
   const handleChange = (event) => {
-    setPosts(event.target.value);
+    if (event.target.name === "name") setName(event.target.value);
+    else {
+      setPost(event.target.value);
+    }
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (posts && posts.trim()) {
+    if (post && post.trim() && name && name.trim()) {
       const postedData = await axios.post("http://localhost:5000/api/items/", {
-        name: posts.trim(),
+        name: name.trim(),
+        post: post.trim(),
       });
-      alert(posts + " is posted successfully.");
+      alert(post + " is posted successfully.");
+      fetchData();
       console.log("post: ", postedData);
     } else {
       alert("Post can't be empty");
@@ -25,35 +31,57 @@ const Posts = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const getData = await axios.get("http://localhost:5000/api/items/");
-        console.log(getData);
-        if (getData && getData.data) {
-          setValues(getData.data);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
     fetchData();
   }, []);
 
+  const fetchData = async () => {
+    try {
+      const getData = await axios.get("http://localhost:5000/api/items/");
+      console.log(getData);
+      if (getData && getData.data) {
+        setValues(getData.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1> Posts </h1>
-
-        {values.map((myData, index) => (
-          <h3 key={index}>{myData.name}</h3>
-        ))}
-
-        <form onSubmit={handleSubmit}>
-          Type Something:
-          <input value={posts} onChange={handleChange} type="text" />
+    <div>
+      <h1> Posts </h1>
+      <form onSubmit={handleSubmit}>
+        Type Something:
+        <center>
+          {" "}
+          <input
+            name="name"
+            value={name}
+            placeholder="Write something... "
+            onChange={handleChange}
+            type="text"
+          />
+          <br />
+          <input
+            name="post"
+            value={post}
+            placeholder="Write something... "
+            onChange={handleChange}
+            type="text"
+          />
+        </center>
+        <center>
+          {" "}
           <input value="Post" type="submit" />
-        </form>
-      </header>
+        </center>
+      </form>
+
+      {values &&
+        values.map((myData, index) => (
+          <div>
+            <h3>{myData.name}</h3>
+            <p>{myData.post}</p>
+          </div>
+        ))}
     </div>
   );
 };
