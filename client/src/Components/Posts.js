@@ -77,7 +77,7 @@ const Posts = () => {
 
       {values &&
         values.map((myData, index) => (
-          <div>
+          <div key={index}>
             <h3>{myData.name}</h3>
             <p>{myData.post}</p>
           </div>
