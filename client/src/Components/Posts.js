@@ -15,10 +15,7 @@ const useStyles = makeStyles((theme) => ({
   appBar: {
     backgroundColor: "aqua",
   },
-  root: {
-    minWidth: 275,
-    marginBottom: "20px",
-  },
+
   bullet: {
     display: "inline-block",
     margin: "0 2px",
@@ -143,9 +140,15 @@ const Posts = () => {
         </form>
 
         <div>
+          {console.log(values)}
           {values &&
             values.map((myData, index) => (
-              <Card key={index} className={classes.root}>
+              <Card
+                key={index}
+                className={classes.root}
+                style={{ margin: "10px" }}
+              >
+                {myData.date}
                 <CardContent>
                   <Typography
                     className={classes.title}
