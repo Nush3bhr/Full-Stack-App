@@ -9,7 +9,10 @@ import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
-import { TextField } from "@material-ui/core";
+import { TextField, Box } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
+import { format } from "date-fns";
+import moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -26,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
   },
   pos: {
     marginBottom: 12,
+  },
+  textField: {
+    width: 500,
   },
 }));
 const Posts = () => {
@@ -98,75 +104,127 @@ const Posts = () => {
 
   return (
     <div className="mainDiv">
-      <AppBar className={classes.appBar} position="static">
-        <Toolbar>
-          <Typography variant="h1" color="primary">
-            PostIt
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <div classes="secondDiv">
-        <form style={{ margin: "20px" }} onSubmit={handleSubmit}>
-          <Typography className={classes.typo}> Type Something:</Typography>
-          <TextField
-            name="name"
-            label="Name"
-            value={name}
-            onChange={handleChange}
-          />
-          <br />
-          <TextField
-            name="toName"
-            value={toName}
-            label="To Whom"
-            onChange={handleChange}
-          />
-          <br />
-          <TextField
-            name="post"
-            label="Quotes"
-            value={post}
-            onChange={handleChange}
-          />
+      <form
+        style={{ margin: "20px", width: "50%", textAlign: "center" }}
+        onSubmit={handleSubmit}
+      >
+        <Typography
+          style={{
+            marginTop: "100px",
+            fontWeight: "bold",
+            fontSize: "30px",
+          }}
+        >
+          {" "}
+          Let ur WORDS add icing to someone's Day!
+        </Typography>
+        <TextField
+          // className={classes.width}
+          fullWidth
+          name="name"
+          label="Name"
+          value={name}
+          onChange={handleChange}
+          style={{ margin: "10px" }}
+        />
+        <br />
+        <TextField
+          fullWidth
+          name="toName"
+          value={toName}
+          label="Dedicating To"
+          onChange={handleChange}
+          style={{ margin: "10px" }}
+        />
+        <br />
+        <TextField
+          multiline
+          fullWidth
+          name="post"
+          label="Quote"
+          variant="outlined"
+          value={post}
+          onChange={handleChange}
+          style={{ marginTop: "20px" }}
+        />
+        <br />
 
-          <Button
-            style={{ marginLeft: "50px" }}
-            variant="contained"
-            color="primary"
-            type="submit"
-          >
-            Post
-          </Button>
-        </form>
+        <Button
+          style={{
+            marginTop: "20px",
+            marginLeft: "60px",
+            fontWeight: "bold",
+          }}
+          variant="outlined"
+          color="primary"
+          type="submit"
+          size="large"
+        >
+          Post
+        </Button>
+      </form>
 
-        <div>
+      <div>
+        <Grid container spacing={2}>
           {console.log(values)}
           {values &&
-            values.map((myData, index) => (
-              <Card
-                key={index}
-                className={classes.root}
-                style={{ margin: "10px" }}
-              >
-                {myData.date}
-                <CardContent>
-                  <Typography
-                    className={classes.title}
-                    color="textSecondary"
-                    gutterBottom
+            values.map((myData, index) => {
+              let d = new Date(myData.date);
+              return (
+                <Grid item lg={8} sm={3} md={4}>
+                  <Card
+                    key={index}
+                    className={classes.root}
+                    style={{
+                      margin: "20px",
+                      padding: "20px",
+                      backgroundColor: "rgb(255, 251, 219)",
+                      border: "3px black solid",
+                      boxShadow: "0 8px 8px 0 rgba(0, 0, 0, 0.4)",
+                    }}
                   >
-                    {index +
-                      1 +
-                      ". " +
-                      myData.name +
-                      " posted to " +
-                      myData.receiver}
-                  </Typography>
-                  {myData.post}
-                </CardContent>
-              </Card>
-            ))}
-        </div>
+                    <CardContent>
+                      <Typography
+                        color="textSecondary"
+                        style={{ textAlign: "right", fontSize: "15px" }}
+                      >
+                        {/* {format(myData.date, "MMMM do, yyyy H:mma")} */}
+                        {/* {d.toDateString()} */}
+                        {moment(myData.date).fromNow()}
+                      </Typography>
+                      <Typography
+                        style={{
+                          fontWeight: "bold",
+                          fontSize: "16px",
+                          fontStyle: "italic",
+                        }}
+                        className={classes.title}
+                        color="textSecondary"
+                        gutterBottom
+                      >
+                        {/* {index +
+                            1 +
+                            ". " + */}
+                        {myData.name.toUpperCase() +
+                          " dedicated to " +
+                          myData.receiver.toUpperCase()}
+                      </Typography>
+                      <Typography
+                        style={{
+                          fontWeight: "bold",
+
+                          fontSize: "18px",
+                          marginTop: "20px",
+                        }}
+                      >
+                        {myData.post}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              );
+            })}
+        </Grid>
       </div>
     </div>
   );
