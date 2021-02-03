@@ -55,20 +55,13 @@ const Posts = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      if (
-        post &&
-        post.trim() &&
-        name &&
-        name.trim() &&
-        toName &&
-        toName.trim()
-      ) {
+      if (post && post.trim() && name && name.trim()) {
         const postedData = await axios.post(
           "http://localhost:5000/api/items/",
           {
             name: name.trim(),
             post: post.trim(),
-            receiver: toName.trim(),
+            receiver: toName && toName.trim(),
           }
         );
         alert(post + " is posted successfully to   " + toName);
@@ -77,7 +70,7 @@ const Posts = () => {
         setPost("");
         setToName("");
 
-        console.log("post: ", postedData);
+        console.log("postedData: ", postedData);
       } else {
         alert("Post can't be empty");
       }
@@ -93,7 +86,7 @@ const Posts = () => {
   const fetchData = async () => {
     try {
       const getData = await axios.get("http://localhost:5000/api/items/");
-      console.log(getData);
+      console.log("getData:", getData);
       if (getData && getData.data) {
         setValues(getData.data);
       }
@@ -119,13 +112,13 @@ const Posts = () => {
           Let ur WORDS add icing to someone's Day!
         </Typography>
         <TextField
-          // className={classes.width}
+          required
           fullWidth
           name="name"
           label="Name"
           value={name}
           onChange={handleChange}
-          style={{ margin: "10px" }}
+          style={{ margin: "15px" }}
         />
         <br />
         <TextField
@@ -134,10 +127,11 @@ const Posts = () => {
           value={toName}
           label="Dedicating To"
           onChange={handleChange}
-          style={{ margin: "10px" }}
+          style={{ margin: "15px" }}
         />
         <br />
         <TextField
+          required
           multiline
           fullWidth
           name="post"
@@ -145,7 +139,7 @@ const Posts = () => {
           variant="outlined"
           value={post}
           onChange={handleChange}
-          style={{ marginTop: "20px" }}
+          style={{ marginTop: "40px", marginLeft: "10px" }}
         />
         <br />
 
@@ -166,7 +160,6 @@ const Posts = () => {
 
       <div>
         <Grid container spacing={2}>
-          {console.log(values)}
           {values &&
             values.map((myData, index) => {
               let d = new Date(myData.date);
@@ -179,7 +172,7 @@ const Posts = () => {
                       margin: "20px",
                       padding: "20px",
                       backgroundColor: "rgb(255, 251, 219)",
-                      border: "3px black solid",
+                      border: "2px black solid",
                       boxShadow: "0 8px 8px 0 rgba(0, 0, 0, 0.4)",
                     }}
                   >
@@ -188,31 +181,27 @@ const Posts = () => {
                         color="textSecondary"
                         style={{ textAlign: "right", fontSize: "15px" }}
                       >
-                        {/* {format(myData.date, "MMMM do, yyyy H:mma")} */}
-                        {/* {d.toDateString()} */}
                         {moment(myData.date).fromNow()}
                       </Typography>
                       <Typography
                         style={{
                           fontWeight: "bold",
                           fontSize: "16px",
-                          fontStyle: "italic",
                         }}
                         className={classes.title}
                         color="textSecondary"
                         gutterBottom
                       >
-                        {/* {index +
-                            1 +
-                            ". " + */}
-                        {myData.name.toUpperCase() +
+                        {(myData.name && myData.name.toUpperCase()) +
                           " dedicated to " +
-                          myData.receiver.toUpperCase()}
+                          (myData.receiver
+                            ? myData.receiver.toUpperCase()
+                            : "EVERYONE")}
                       </Typography>
                       <Typography
                         style={{
                           fontWeight: "bold",
-
+                          fontStyle: "italic",
                           fontSize: "18px",
                           marginTop: "20px",
                         }}
