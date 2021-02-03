@@ -5,6 +5,7 @@ cors = require("cors");
 const bodyParser = require("body-parser");
 
 const items = require("./routes/api/items");
+const bonds = require("./routes/api/bonds");
 
 const app = express();
 app.use(cors());
@@ -20,6 +21,7 @@ mongoose
   .catch((err) => console.log(err));
 
 app.use("/api/items", items);
+app.use("/api/bonds", bonds);
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log("Server started on port " + port));

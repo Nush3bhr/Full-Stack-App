@@ -26,10 +26,10 @@ const BondCalculator = () => {
     const valueNeeded =
       string1 + " is " + percent + " % " + "compatible with " + string2 + ".";
 
-    const postedData = await axios.post("http://localhost:5000/api/items/", {
+    const postedData = await axios.post("http://localhost:5000/api/bonds/", {
       name: string1.trim(),
-      post: valueNeeded,
-      receiver: string2.trim(),
+      message: valueNeeded,
+      partner: string2.trim(),
     });
 
     const delay = (ms) => new Promise((res) => setTimeout(res, ms));
