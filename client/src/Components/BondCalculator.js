@@ -35,20 +35,27 @@ const BondCalculator = () => {
     const delay = (ms) => new Promise((res) => setTimeout(res, ms));
     setValue("Wait!!");
     setDisabled(true);
-    await delay(3000);
+    await delay(1000);
     setValue("Testing your compatibility.......");
-    await delay(5000);
+    await delay(1500);
     setValue("Calculating........");
-    await delay(5000);
+    await delay(1000);
     setValue("Finally!!!");
-    await delay(5000);
+    await delay(1500);
     setValue(valueNeeded);
+    setDisabled(false);
+  };
+
+  const handleReset = () => {
+    setString1("");
+    setString2("");
+    setValue("");
     setDisabled(false);
   };
 
   return (
     <div>
-      <div style={{ textAlign: "center", marginTop: "200px" }}>
+      <div style={{ textAlign: "center", marginTop: "100px" }}>
         <Typography variant="h3">Test Your BOND!</Typography>
       </div>
 
@@ -77,6 +84,7 @@ const BondCalculator = () => {
               value={string1}
               onChange={handleChange}
               style={{ margin: "10px" }}
+              disabled={disabled}
             />
             <Typography>
               <strong> Partner's Name:</strong>{" "}
@@ -92,6 +100,7 @@ const BondCalculator = () => {
               value={string2}
               onChange={handleChange}
               style={{ margin: "10px" }}
+              disabled={disabled}
             />
             <br />
             <Button
@@ -103,9 +112,25 @@ const BondCalculator = () => {
             >
               Check
             </Button>
+            <Button
+              variant="outlined"
+              color="secondary"
+              style={{ margin: "10px" }}
+              // disabled={disableReset}
+              onClick={handleReset}
+            >
+              Reset
+            </Button>
 
-            <Typography>
-              <strong>{value}</strong>
+            <Typography
+              style={{
+                margin: "30px",
+                fontFamily: "revert",
+                color: "red",
+                fontWeight: "bold",
+              }}
+            >
+              {value}
             </Typography>
           </form>
         </CardContent>

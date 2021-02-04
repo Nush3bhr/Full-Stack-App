@@ -67,12 +67,15 @@ const RandomNo = () => {
     event.preventDefault();
     const delay = (ms) => new Promise((res) => setTimeout(res, ms));
     setDisabled(true);
+
     await delay(1000);
     setAns(message(input));
 
-    if (chances === 1 || Number(input) === Number(randomNo)) {
+    if (chances === 1) {
       setDisabled(true);
       setChances(0);
+    } else if (Number(input) === Number(randomNo)) {
+      setDisabled(true);
     } else {
       setChances(chances - 1);
       setDisabled(false);
@@ -84,7 +87,6 @@ const RandomNo = () => {
       <div style={{ textAlign: "center", marginTop: "150px" }}>
         <Typography variant="h4">Guess the NUMBER!</Typography>
       </div>
-      {/* {randomNo} */}
       <Card
         style={{
           marginTop: "50px",
@@ -96,8 +98,8 @@ const RandomNo = () => {
       >
         <CardContent style={{ fontWeight: "bold" }}>
           <form onSubmit={handleSubmit}>
-            <Typography>
-              <strong> Enter your Guess no (0-100) :</strong>{" "}
+            <Typography style={{ fontWeight: "bold" }}>
+              Enter your Guess no (0-100) :
             </Typography>
             <TextField
               required
@@ -106,21 +108,31 @@ const RandomNo = () => {
               placeholder="Type your No"
               value={input}
               onChange={handleChange}
+              disabled={disabled}
               style={{ margin: "10px" }}
             />
-            <br />
-            <br />
-            <br />
-            {chances + " chances u have!!"}
-            <br />
-            <br />
-            <br />
-            {ans} <br />
+            <Typography style={{ margin: "30px" }}>
+              {" "}
+              {chances + " chances u have!!"}
+            </Typography>
+
+            <Typography
+              style={{
+                margin: "30px",
+                fontFamily: "cursive",
+                color: "green",
+                fontWeight: "bold",
+              }}
+            >
+              {" "}
+              {ans}
+            </Typography>
+
             <Button
               variant="outlined"
               color="secondary"
               type="submit"
-              style={{ margin: "30px" }}
+              style={{ margin: "20px" }}
               disabled={disabled}
             >
               Check
@@ -129,7 +141,7 @@ const RandomNo = () => {
               onClick={handleClear}
               variant="outlined"
               color="secondary"
-              style={{ margin: "30px" }}
+              style={{ margin: "20px" }}
               disabled={disabled}
             >
               Clear
@@ -137,7 +149,7 @@ const RandomNo = () => {
             <Button
               variant="outlined"
               color="secondary"
-              style={{ margin: "30px" }}
+              style={{ margin: "20px" }}
               disabled={disableReset}
               onClick={handleReset}
             >

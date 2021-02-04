@@ -120,7 +120,7 @@ const Posts = () => {
           onChange={handleChange}
           style={{ margin: "15px" }}
         />
-        <br />
+
         <TextField
           fullWidth
           name="toName"
@@ -129,7 +129,7 @@ const Posts = () => {
           onChange={handleChange}
           style={{ margin: "15px" }}
         />
-        <br />
+
         <TextField
           required
           multiline
@@ -141,12 +141,10 @@ const Posts = () => {
           onChange={handleChange}
           style={{ marginTop: "40px", marginLeft: "10px" }}
         />
-        <br />
 
         <Button
           style={{
-            marginTop: "20px",
-            marginLeft: "60px",
+            margin: "20px",
             fontWeight: "bold",
           }}
           variant="outlined"
