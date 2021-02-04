@@ -19,8 +19,8 @@ router.post("/", (req, res) => {
   newItem.save().then((item) => res.json(item));
 });
 
-router.delete("/:id", (req, res) => {
-  Item.findById(req.params.id)
+router.delete("/", (req, res) => {
+  Item.findById(req.body.id)
     .then((items) => items.remove().then(() => res.json({ success: true })))
     .catch((err) => res.status(404).json({ success: false }));
 });

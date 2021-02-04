@@ -3,15 +3,13 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import "./Posts.css";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
+import DeleteIcon from "@material-ui/icons/Delete";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import { TextField, Box } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import { format } from "date-fns";
 import moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
@@ -49,6 +47,21 @@ const Posts = () => {
       setPost(event.target.value);
     } else {
       setToName(event.target.value);
+    }
+  };
+
+  const handleDelete = async (cardId) => {
+    console.log("values:", values);
+    let pswd = prompt("Enter pass to delete");
+    if (pswd === "!#%&") {
+      await axios.delete("http://localhost:5000/api/items/", {
+        data: {
+          id: cardId,
+        },
+      });
+      fetchData();
+    } else {
+      alert("Idiot, this is my APP! Only I have the right to delete!!");
     }
   };
 
@@ -162,7 +175,7 @@ const Posts = () => {
             values.map((myData, index) => {
               let d = new Date(myData.date);
               return (
-                <Grid item lg={8} sm={3} md={4}>
+                <Grid item lg={8} sm={2} md={6}>
                   <Card
                     key={index}
                     className={classes.root}
@@ -206,6 +219,9 @@ const Posts = () => {
                       >
                         {myData.post}
                       </Typography>
+                      <Box style={{ textAlign: "right" }}>
+                        <DeleteIcon onClick={() => handleDelete(myData._id)} />
+                      </Box>
                     </CardContent>
                   </Card>
                 </Grid>

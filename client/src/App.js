@@ -45,7 +45,7 @@ function App() {
               style={{ textDecoration: "none", color: "white" }}
             >
               {" "}
-              <Typography style={{ margin: "10px" }}>Bond</Typography>
+              <Typography style={{ margin: "10px" }}> Test Bond</Typography>
             </Link>
           </Toolbar>
         </AppBar>

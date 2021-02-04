@@ -26,10 +26,10 @@ const BondCalculator = () => {
     const valueNeeded =
       string1 + " is " + percent + " % " + "compatible with " + string2 + ".";
 
-    const postedData = await axios.post("http://localhost:5000/api/items/", {
+    const postedData = await axios.post("http://localhost:5000/api/bonds/", {
       name: string1.trim(),
-      post: valueNeeded,
-      receiver: string2.trim(),
+      message: valueNeeded,
+      partner: string2.trim(),
     });
 
     const delay = (ms) => new Promise((res) => setTimeout(res, ms));
@@ -58,7 +58,6 @@ const BondCalculator = () => {
       <div style={{ textAlign: "center", marginTop: "100px" }}>
         <Typography variant="h3">Test Your BOND!</Typography>
       </div>
-
       <Card
         style={{
           marginTop: "50px",
@@ -71,9 +70,7 @@ const BondCalculator = () => {
       >
         <CardContent style={{ fontWeight: "bold" }}>
           <form onSubmit={handleSubmit}>
-            <Typography>
-              <strong> Your Name:</strong>{" "}
-            </Typography>
+            <Typography style={{ fontWeight: "bold" }}>Your Name:</Typography>
 
             <TextField
               required
@@ -86,8 +83,8 @@ const BondCalculator = () => {
               style={{ margin: "10px" }}
               disabled={disabled}
             />
-            <Typography>
-              <strong> Partner's Name:</strong>{" "}
+            <Typography style={{ fontWeight: "bold" }}>
+              Partner's Name:
             </Typography>
 
             <TextField
@@ -95,7 +92,7 @@ const BondCalculator = () => {
               required
               variant="outlined"
               type="text"
-              placeholder="test your bond with"
+              placeholder="Test your bond with"
               name="string2"
               value={string2}
               onChange={handleChange}
@@ -124,9 +121,9 @@ const BondCalculator = () => {
 
             <Typography
               style={{
-                margin: "30px",
+                margin: "25px",
                 fontFamily: "revert",
-                color: "red",
+                color: "brown",
                 fontWeight: "bold",
               }}
             >
