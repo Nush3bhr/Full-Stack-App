@@ -2,6 +2,7 @@ import {
   Button,
   Card,
   CardContent,
+  Grid,
   TextField,
   Typography,
 } from "@material-ui/core";
@@ -46,19 +47,19 @@ const RandomNo = () => {
     } else if (guessInput === random + 1) {
       return guessInput + " is HIGH but u r almost there!!";
     } else if (guessInput === random) {
-      return "Hurray!! It's a correct guess.";
+      return guessInput + " Hurray!! It's a correct guess.";
     } else if (guessInput < random - 1 && guessInput >= random - 5) {
-      return "low but very close!!";
+      return guessInput + " low but very close!!";
     } else if (guessInput > random + 1 && guessInput <= random + 5) {
-      return "High butvery  close!!";
+      return guessInput + " High but very  close!!";
     } else if (guessInput < random - 5 && guessInput >= random - 10) {
-      return "low but near!!";
+      return guessInput + " low but near!!";
     } else if (guessInput > random + 5 && guessInput <= random + 10) {
-      return "High but near!!";
+      return guessInput + " High but near!!";
     } else if (guessInput < random - 10) {
-      return "Too Low!!";
+      return guessInput + " Too Low!!";
     } else if (guessInput > random + 10) {
-      return "Too High!!";
+      return guessInput + " Too High!!";
     }
   };
 
@@ -82,81 +83,84 @@ const RandomNo = () => {
   };
 
   return (
-    <div>
+    <div style={{ textAlign: "center" }}>
       <div style={{ textAlign: "center", marginTop: "150px" }}>
         <Typography variant="h4">Guess the NUMBER!</Typography>
       </div>
-      <Card
-        style={{
-          marginTop: "50px",
-          width: "30%",
-          marginLeft: "35%",
-          boxShadow: "0 8px 8px 0 rgba(0, 0, 0, 0.4)",
-          padding: "10px",
-        }}
-      >
-        <CardContent style={{ fontWeight: "bold" }}>
-          <form onSubmit={handleSubmit}>
-            <Typography style={{ fontWeight: "bold" }}>
-              Enter your Guess no (0-100) :
-            </Typography>
-            <TextField
-              required
-              variant="outlined"
-              type="number"
-              placeholder="Type your No"
-              value={input}
-              onChange={handleChange}
-              disabled={disabled}
-              style={{ margin: "10px" }}
-            />
-            <Typography style={{ margin: "30px" }}>
-              {" "}
-              {chances + " chances u have!!"}
-            </Typography>
+      <Grid container style={{ marginTop: "20px" }}>
+        <Grid item xs></Grid>
+        <Grid item md={4} sm={6} lg={4} xs={10}>
+          <Card
+            style={{
+              boxShadow: "0 8px 8px 0 rgba(0, 0, 0, 0.4)",
+              padding: "10px",
+            }}
+          >
+            <CardContent style={{ fontWeight: "bold" }}>
+              <form onSubmit={handleSubmit}>
+                <Typography style={{ fontWeight: "bold" }}>
+                  Enter your Guess no (0-100) :
+                </Typography>
+                <TextField
+                  required
+                  variant="outlined"
+                  type="number"
+                  placeholder="Type your No"
+                  value={input}
+                  onChange={handleChange}
+                  disabled={disabled}
+                  style={{ margin: "10px" }}
+                />
+                <Typography style={{ margin: "30px" }}>
+                  {" "}
+                  {chances + " chances u have!!"}
+                </Typography>
 
-            <Typography
-              style={{
-                margin: "30px",
-                fontFamily: "cursive",
-                color: "green",
-                fontWeight: "bold",
-              }}
-            >
-              {" "}
-              {ans}
-            </Typography>
+                <Typography
+                  style={{
+                    margin: "30px",
+                    fontFamily: "cursive",
+                    color: "green",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {" "}
+                  {ans}
+                </Typography>
 
-            <Button
-              variant="outlined"
-              color="secondary"
-              type="submit"
-              style={{ margin: "20px" }}
-              disabled={disabled}
-            >
-              Check
-            </Button>
-            <Button
-              onClick={handleClear}
-              variant="outlined"
-              color="secondary"
-              style={{ margin: "20px" }}
-              disabled={disabled}
-            >
-              Clear
-            </Button>
-            <Button
-              variant="outlined"
-              color="secondary"
-              style={{ margin: "20px" }}
-              disabled={disableReset}
-              onClick={handleReset}
-            >
-              Reset
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  type="submit"
+                  style={{ margin: "20px" }}
+                  disabled={disabled}
+                >
+                  Check
+                </Button>
+                <Button
+                  onClick={handleClear}
+                  variant="outlined"
+                  color="secondary"
+                  style={{ margin: "20px" }}
+                  disabled={disabled}
+                >
+                  Clear
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  style={{ margin: "20px" }}
+                  disabled={disableReset}
+                  onClick={handleReset}
+                >
+                  Reset
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs></Grid>
+      </Grid>
     </div>
   );
 };

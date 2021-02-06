@@ -11,6 +11,7 @@ import Button from "@material-ui/core/Button";
 import { TextField, Box } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import moment from "moment";
+import { SERVER_URL } from "./globals";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -54,7 +55,7 @@ const Posts = () => {
     console.log("values:", values);
     let pswd = prompt("Enter pass to delete");
     if (pswd === "!#%&") {
-      await axios.delete("http://localhost:5000/api/items/", {
+      await axios.delete(`${SERVER_URL}/items/`, {
         data: {
           id: cardId,
         },
@@ -69,14 +70,11 @@ const Posts = () => {
     event.preventDefault();
     try {
       if (post && post.trim() && name && name.trim()) {
-        const postedData = await axios.post(
-          "http://localhost:5000/api/items/",
-          {
-            name: name.trim(),
-            post: post.trim(),
-            receiver: toName && toName.trim(),
-          }
-        );
+        const postedData = await axios.post(`${SERVER_URL}/items/`, {
+          name: name.trim(),
+          post: post.trim(),
+          receiver: toName && toName.trim(),
+        });
         alert(post + " is posted successfully to   " + toName);
         fetchData();
         setName("");
@@ -98,7 +96,7 @@ const Posts = () => {
 
   const fetchData = async () => {
     try {
-      const getData = await axios.get("http://localhost:5000/api/items/");
+      const getData = await axios.get(`${SERVER_URL}/items/`);
       console.log("getData:", getData);
       if (getData && getData.data) {
         setValues(getData.data);
@@ -110,64 +108,65 @@ const Posts = () => {
 
   return (
     <div className="mainDiv">
-      <form
-        style={{ margin: "20px", width: "50%", textAlign: "center" }}
-        onSubmit={handleSubmit}
-      >
-        <Typography
-          style={{
-            marginTop: "100px",
-            fontWeight: "bold",
-            fontSize: "30px",
-          }}
-        >
-          {" "}
-          Let ur WORDS add icing to someone's Day!
-        </Typography>
-        <TextField
-          required
-          fullWidth
-          name="name"
-          label="Name"
-          value={name}
-          onChange={handleChange}
-          style={{ margin: "15px" }}
-        />
+      <Grid container style={{ marginTop: "20px" }}>
+        <Grid item></Grid>
+        <form style={{ padding: "20px" }} onSubmit={handleSubmit}>
+          <Typography
+            style={{
+              marginTop: "40px",
+              fontWeight: "bold",
+              fontSize: "30px",
+            }}
+          >
+            Let ur WORDS add icing to someone's Day!
+          </Typography>
+          <TextField
+            required
+            fullWidth
+            name="name"
+            label="Name"
+            value={name}
+            onChange={handleChange}
+            style={{ margin: "15px" }}
+          />
 
-        <TextField
-          fullWidth
-          name="toName"
-          value={toName}
-          label="Dedicating To"
-          onChange={handleChange}
-          style={{ margin: "15px" }}
-        />
+          <TextField
+            fullWidth
+            name="toName"
+            value={toName}
+            label="Dedicating To"
+            onChange={handleChange}
+            style={{ margin: "15px" }}
+          />
 
-        <TextField
-          required
-          multiline
-          fullWidth
-          name="post"
-          label="Quote"
-          variant="outlined"
-          value={post}
-          onChange={handleChange}
-          style={{ marginTop: "40px", marginLeft: "10px" }}
-        />
+          <TextField
+            required
+            multiline
+            fullWidth
+            name="post"
+            label="Quote"
+            variant="outlined"
+            value={post}
+            onChange={handleChange}
+            style={{ marginTop: "40px", marginLeft: "10px" }}
+          />
 
-        <Button
-          style={{
-            margin: "20px",
-            fontWeight: "bold",
-          }}
-          variant="outlined"
-          color="primary"
-          type="submit"
-          size="large"
-        >
-          Post
-        </Button>
-      </form>
+          <Button
+            style={{
+              margin: "20px",
+              fontWeight: "bold",
+            }}
+            variant="outlined"
+            color="primary"
+            type="submit"
+            size="large"
+          >
+            Post
+          </Button>
+        </form>
+      </Grid>
+      <Grid item xs></Grid>
+      <Grid item xs></Grid>
 
       <div>
         <Grid container spacing={2}>

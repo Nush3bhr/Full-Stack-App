@@ -3,7 +3,8 @@ import axios from "axios";
 
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { Button, TextField, Typography } from "@material-ui/core";
+import { Button, Grid, TextField, Typography } from "@material-ui/core";
+import { SERVER_URL } from "./globals";
 
 const BondCalculator = () => {
   const [string1, setString1] = useState("");
@@ -26,7 +27,7 @@ const BondCalculator = () => {
     const valueNeeded =
       string1 + " is " + percent + " % " + "compatible with " + string2 + ".";
 
-    const postedData = await axios.post("http://localhost:5000/api/bonds/", {
+    const postedData = await axios.post(`${SERVER_URL}/bonds/`, {
       name: string1.trim(),
       message: valueNeeded,
       partner: string2.trim(),
@@ -55,83 +56,87 @@ const BondCalculator = () => {
 
   return (
     <div>
-      <div style={{ textAlign: "center", marginTop: "100px" }}>
+      <div style={{ textAlign: "center", marginTop: "150px" }}>
         <Typography variant="h3">Test Your BOND!</Typography>
       </div>
-      <Card
-        style={{
-          marginTop: "50px",
-          width: "30%",
-          marginLeft: "35%",
-          padding: "20px",
-          backgroundColor: "rgb(238, 255, 252)",
-          boxShadow: "0 8px 8px 0 rgba(0, 0, 0, 0.4)",
-        }}
-      >
-        <CardContent style={{ fontWeight: "bold" }}>
-          <form onSubmit={handleSubmit}>
-            <Typography style={{ fontWeight: "bold" }}>Your Name:</Typography>
+      <Grid container style={{ marginTop: "20px" }}>
+        <Grid item xs></Grid>
+        <Grid item md={4} sm={6} lg={4} xs={10}>
+          <Card
+            style={{
+              backgroundColor: "rgb(238, 255, 252)",
+              boxShadow: "0 8px 8px 0 rgba(0, 0, 0, 0.4)",
+            }}
+          >
+            <CardContent style={{ fontWeight: "bold" }}>
+              <form onSubmit={handleSubmit}>
+                <Typography style={{ fontWeight: "bold" }}>
+                  Your Name:
+                </Typography>
 
-            <TextField
-              required
-              variant="outlined"
-              type="text"
-              placeholder="Name"
-              name="string1"
-              value={string1}
-              onChange={handleChange}
-              style={{ margin: "10px" }}
-              disabled={disabled}
-            />
-            <Typography style={{ fontWeight: "bold" }}>
-              Partner's Name:
-            </Typography>
+                <TextField
+                  required
+                  variant="outlined"
+                  type="text"
+                  placeholder="Name"
+                  name="string1"
+                  value={string1}
+                  onChange={handleChange}
+                  style={{ margin: "10px" }}
+                  disabled={disabled}
+                />
+                <Typography style={{ fontWeight: "bold" }}>
+                  Partner's Name:
+                </Typography>
 
-            <TextField
-              fullwidth
-              required
-              variant="outlined"
-              type="text"
-              placeholder="Test your bond with"
-              name="string2"
-              value={string2}
-              onChange={handleChange}
-              style={{ margin: "10px" }}
-              disabled={disabled}
-            />
-            <br />
-            <Button
-              variant="outlined"
-              color="secondary"
-              type="submit"
-              style={{ margin: "10px" }}
-              disabled={disabled}
-            >
-              Check
-            </Button>
-            <Button
-              variant="outlined"
-              color="secondary"
-              style={{ margin: "10px" }}
-              // disabled={disableReset}
-              onClick={handleReset}
-            >
-              Reset
-            </Button>
+                <TextField
+                  fullwidth
+                  required
+                  variant="outlined"
+                  type="text"
+                  placeholder="Test your bond with"
+                  name="string2"
+                  value={string2}
+                  onChange={handleChange}
+                  style={{ margin: "10px" }}
+                  disabled={disabled}
+                />
+                <br />
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  type="submit"
+                  style={{ margin: "10px" }}
+                  disabled={disabled}
+                >
+                  Check
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  style={{ margin: "10px" }}
+                  // disabled={disableReset}
+                  onClick={handleReset}
+                >
+                  Reset
+                </Button>
 
-            <Typography
-              style={{
-                margin: "25px",
-                fontFamily: "revert",
-                color: "brown",
-                fontWeight: "bold",
-              }}
-            >
-              {value}
-            </Typography>
-          </form>
-        </CardContent>
-      </Card>
+                <Typography
+                  style={{
+                    margin: "25px",
+                    fontFamily: "revert",
+                    color: "brown",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {value}
+                </Typography>
+              </form>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs></Grid>
+      </Grid>
     </div>
   );
 };
