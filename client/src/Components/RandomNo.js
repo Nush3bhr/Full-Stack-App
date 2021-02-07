@@ -49,13 +49,13 @@ const RandomNo = () => {
     } else if (guessInput === random) {
       return guessInput + " Hurray!! It's a correct guess.";
     } else if (guessInput < random - 1 && guessInput >= random - 5) {
-      return guessInput + " low but very close!!";
+      return guessInput + " is low but very close!!";
     } else if (guessInput > random + 1 && guessInput <= random + 5) {
-      return guessInput + " High but very  close!!";
+      return guessInput + " is High but very  close!!";
     } else if (guessInput < random - 5 && guessInput >= random - 10) {
-      return guessInput + " low but near!!";
+      return guessInput + " is low but near!!";
     } else if (guessInput > random + 5 && guessInput <= random + 10) {
-      return guessInput + " High but near!!";
+      return guessInput + " is High but near!!";
     } else if (guessInput < random - 10) {
       return guessInput + " Too Low!!";
     } else if (guessInput > random + 10) {
